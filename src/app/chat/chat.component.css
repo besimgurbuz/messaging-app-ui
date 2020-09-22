@@ -1,0 +1,50 @@
+.chat-component {
+  position: relative;
+  display: flex;
+  min-width: 720px;
+  min-height: 600px;
+  border: 3px solid white;
+  border-radius: 5px;
+}
+
+.chat-component > .logout {
+  position: absolute;
+  top: -50px;
+  right: 0;
+}
+
+.chat-component > .sidebar {
+  flex: 0.4;
+  background-color: #f1f1f1;
+}
+
+.sidebar > form {
+  padding: 10px 8px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.chat-component > .chats {
+  background-color: white;
+  flex-direction: column;
+}
+
+.chats > .chat {
+  padding: 10px !important;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+.chat-component > .room-div {
+  flex: 0.6;
+}
+
+.bumper {
+  height: 100%;
+  width: 100%;
+  background-color: cornsilk;
+  display: flex;
+  justify-content: center;
+}

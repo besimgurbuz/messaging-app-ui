@@ -1,0 +1,55 @@
+<div class="register-container">
+  <form class="register-form" [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+    <div class="register-result"
+      [ngClass]="{'error-message': !resultMessage.success, 'success-message': resultMessage.success}" #resultDiv
+      *ngIf="resultMessage.text">
+      {{ resultMessage.text }}
+    </div>
+    <!-- Username -->
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" [errorStateMatcher]="matcher" type="text">
+      <mat-error
+        *ngIf="registerForm.controls['username'].hasError('minlength') && !registerForm.controls['username'].hasError('maxlength') && !registerForm.controls['username'].hasError('required')">
+        Username length must be at least 5 characters long.
+      </mat-error>
+      <mat-error
+        *ngIf="registerForm.controls['username'].hasError('maxlength') && !registerForm.controls['username'].hasError('minlength') && !registerForm.controls['username'].hasError('required')">
+        Username length must be less than or equal to 20 characters long.
+      </mat-error>
+      <mat-error *ngIf="registerForm.controls['username'].hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <!-- Email -->
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" [errorStateMatcher]="matcher" type="email">
+      <mat-error
+        *ngIf="registerForm.controls['email'].hasError('email') && !registerForm.controls['email'].hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="registerForm.controls['email'].hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <!-- Password -->
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" [errorStateMatcher]="matcher" type="password">
+      <mat-error
+        *ngIf="registerForm.controls['password'].hasError('minlength') && !registerForm.controls['password'].hasError('maxlength') && !registerForm.controls['password'].hasError('required')">
+        Password length must be at least 8 characters long.
+      </mat-error>
+      <mat-error
+        *ngIf="registerForm.controls['password'].hasError('maxlength') && !registerForm.controls['password'].hasError('minlength') && !registerForm.controls['password'].hasError('required')">
+        Password length must be less than or equal to 50 characters long.
+      </mat-error>
+      <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-button type="submit" color="accent">Register</button>
+  </form>
+</div>

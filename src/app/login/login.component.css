@@ -1,0 +1,22 @@
+.login-container {
+  background-color: beige;
+  padding: 2rem;
+  max-width: 300px;
+}
+
+.login-form {
+  display: grid;
+  row-gap: 1rem;
+}
+
+.login-form > .error-message {
+  border-radius: 2px;
+  padding: 0.2rem;
+  background-color: #ff0000;
+}
+
+.login-form > .success-message {
+  border-radius: 2px;
+  padding: 0.2rem;
+  background-color: #28a745;
+}

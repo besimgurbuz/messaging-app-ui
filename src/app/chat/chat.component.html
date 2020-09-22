@@ -1,0 +1,38 @@
+<div class="chat-component">
+  <div class="logout">
+    <button mat-button color="primary" (click)="logout()">
+      Log out
+    </button>
+  </div>
+  <div class="sidebar">
+    <form class="start-chat-form" [formGroup]="startChatForm" (ngSubmit)="createChat()">
+      <mat-form-field class="username-field">
+        <mat-label>Enter a username to Chat!</mat-label>
+        <input formControlName="username" matInput type="text" />
+        <mat-error *ngIf="startChatForm.controls['username'].hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <div class="chats">
+      <mat-card class="chat" *ngFor="let chat of chatData" (click)="openRoom(chat._id)">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image">
+            <img src="../../assets/avatar.png" alt="avatar" class="avatar" width="50px">
+          </div>
+          <mat-card-title>{{ chat.receiver[0] }}</mat-card-title>
+          <mat-card-subtitle>
+            {{ returnLastMessage(chat.messages) ? returnLastMessage(chat.messages) : 'Start chatting with ' + chat.receiver[0] }}
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+  <div class="room-div">
+    <app-room *ngIf="openedRoom" [roomId]="openedRoom" (lastMessageChanged)="changeLastMessage($event)">
+    </app-room>
+    <div class="bumper" *ngIf="!openedRoom">
+      <h2>Welcome to Messaging Application!</h2>
+    </div>
+  </div>
+</div>

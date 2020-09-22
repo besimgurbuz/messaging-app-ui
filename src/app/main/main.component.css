@@ -1,0 +1,11 @@
+.container-auth {
+  display: flex;
+  column-gap: 8rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  color: #f1f1f1;
+  font-size: 24px;
+}

@@ -1,0 +1,16 @@
+<div class="room-container">
+  <div class="messages">
+    <div class="message" *ngFor="let mess of messages"
+      [ngClass]="{ 'messageOwner': mess.username === userData.username }">
+      <p class="message-date">{{ mess.date }}</p>
+      <p *ngIf="mess.username !== userData.username" class="message-username">{{ mess.username }}</p>
+      <p class="message-text">{{ mess.body }}</p>
+    </div>
+  </div>
+  <form class="enter-message-form" [formGroup]="messageForm" (ngSubmit)="submitMessage()">
+    <input formControlName="message" type="text" placeholder="Enter a message" class="room-text-input">
+    <button mat-icon-button color="primary" mat-icon-button class="submit-btn">
+      <mat-icon>send</mat-icon>
+    </button>
+  </form>
+</div>

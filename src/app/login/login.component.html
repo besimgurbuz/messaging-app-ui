@@ -1,0 +1,27 @@
+<div class="login-container">
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+    <div class="register-result"
+      [ngClass]="{ 'error-message': !resultMessage.success, 'success-message': resultMessage.success }"
+      *ngIf="resultMessage.text">
+      {{ resultMessage.text }}
+    </div>
+    <!-- Username -->
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" [errorStateMatcher]="matcher" type="text">
+      <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <!-- Password -->
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" [errorStateMatcher]="matcher" type="password">
+      <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-button type="submit" color="accent">Log in</button>
+  </form>
+</div>

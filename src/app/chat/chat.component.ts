@@ -39,7 +39,6 @@ export class ChatComponent implements OnInit {
     this.chatDataService.getChatData().subscribe({
       next: result => {
         this.chatData = result;
-        console.log(this.chatData);
       },
       error: err => {
         console.error(err);
@@ -65,6 +64,10 @@ export class ChatComponent implements OnInit {
 
   changeLastMessage(event) {
     this.getChatData();
+  }
+
+  getChatTitle(id: string): string {
+    return this.chatData.find(data => data._id === id).receiver[0];
   }
 
   logout(): void {

@@ -7,6 +7,8 @@ import { AuthenticateService } from 'src/app/service/authenticate.service';
 import { ChatService } from 'src/app/service/chat.service';
 import { ChatDataService } from '../chat-data.service';
 import ChatData from '../ChatData';
+import { BlockUserService } from 'src/app/service/block-user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-room',
@@ -15,9 +17,11 @@ import ChatData from '../ChatData';
 })
 export class RoomComponent implements OnInit, OnChanges, OnDestroy {
   @Input() roomId: string;
+  @Input() chatTitle: string;
   @Output() lastMessageChanged = new EventEmitter();
   messageForm: FormGroup;
   messageSubscription: Subscription;
+  blockedActionsSubscription: Subscription;
   messages: MessageData[] = [];
   userData;
 
@@ -25,7 +29,9 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
     private fb: FormBuilder,
     private chatDataService: ChatDataService,
     private auth: AuthenticateService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private blockUserService: BlockUserService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +45,10 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
     this.messageSubscription = this.chatService.getMessages().subscribe((messageData) => {
       this.outputMessage(messageData);
     });
+
+    this.blockedActionsSubscription = this.chatService.listenBlockAction().subscribe((message) => {
+      this.outputBlockedMessage(message);
+    });
   }
 
   ngOnChanges() {
@@ -51,11 +61,23 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.messageSubscription.unsubscribe();
+    this.blockedActionsSubscription.unsubscribe();
   }
 
   initMessages() {
     this.chatDataService.getChatById(this.roomId).subscribe((data: ChatData) => {
       data.messages.forEach(message => this.messages.push(message));
+    });
+  }
+
+  blockUser() {
+    this.blockUserService.blockUser(this.chatTitle).subscribe({
+      next: result => {
+        this._snackBar.open(result.message, 'Close', { duration: 2000 });
+      },
+      error: err => {
+        this._snackBar.open(err.error.message, 'Close', { duration: 2000 });
+      }
     });
   }
 
@@ -75,6 +97,10 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
       this.lastMessageChanged.emit();
       this.messageForm.controls.message.setValue('');
     }
+  }
+
+  outputBlockedMessage(msg) {
+    this._snackBar.open(msg, 'Close', { duration: 2000 });
   }
 
   outputMessage(msg): void {

@@ -30,4 +30,12 @@ export class ChatService {
       });
     });
   }
+
+  public listenBlockAction(): Observable<any> {
+    return new Observable((subs) => {
+      this.socket.on('blocked', (message) => {
+        subs.next(message);
+      });
+    });
+  }
 }

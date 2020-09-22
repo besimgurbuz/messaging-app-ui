@@ -7,6 +7,15 @@
   flex-direction: column;
 }
 
+.room-container > .header {
+  position: relative;
+  height: 40px;
+  background-color: #f1f1f1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .messages {
   flex: 0.94;
   max-height: 600px;
@@ -60,7 +69,7 @@
   height: 100%;
 }
 
-.mat-icon-button {
+.submit-btn {
   position: absolute !important;
   right: 0 !important;
   bottom: -5px !important;

@@ -1,4 +1,10 @@
 <div class="room-container">
+  <div class="header">
+    <h1>{{ chatTitle }}</h1>
+    <button mat-icon-button title="Block user.." color="warn" class="block-btn" (click)="blockUser()">
+      <mat-icon>remove_circle</mat-icon>
+    </button>
+  </div>
   <div class="messages">
     <div class="message" *ngFor="let mess of messages"
       [ngClass]="{ 'messageOwner': mess.username === userData.username }">

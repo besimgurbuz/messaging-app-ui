@@ -29,7 +29,8 @@
     </div>
   </div>
   <div class="room-div">
-    <app-room *ngIf="openedRoom" [roomId]="openedRoom" (lastMessageChanged)="changeLastMessage($event)">
+    <app-room *ngIf="openedRoom" [roomId]="openedRoom" [chatTitle]="getChatTitle(openedRoom)"
+      (lastMessageChanged)="changeLastMessage($event)">
     </app-room>
     <div class="bumper" *ngIf="!openedRoom">
       <h2>Welcome to Messaging Application!</h2>
